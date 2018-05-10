@@ -6,7 +6,7 @@ const OPERATORS = {
     ADD : '+',
     SUBTRACT : '-',
     MULTIPLY : 'x',
-    DIVIDE : '÷'
+    DIVIDE : '/'
 };
 
 class Calculator extends Component {
@@ -23,11 +23,13 @@ class Calculator extends Component {
         if (operator === OPERATORS.ADD) {
             result = parseFloat(n1) + parseFloat(n2)
         } else if (operator === OPERATORS.SUBTRACT) {
-            result = parseFloat(n1) - parseFloat(n2)
+            result = parseFloat(n2) - parseFloat(n1)
         } else if (operator === OPERATORS.MULTIPLY) {
             result = parseFloat(n1) * parseFloat(n2)
         } else if (operator === OPERATORS.DIVIDE) {
-            result = parseFloat(n1) / parseFloat(n2)
+            result = parseFloat(n2) / parseFloat(n1)
+        }else {
+            result = '0';
         }
 
         this.setState({result : result});

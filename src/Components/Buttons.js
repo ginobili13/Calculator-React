@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Button from "./Button";
 
-const NUMBERS = [7,8,9,4,5,6,1,2,3,0];
+const NUMBERS = ['7','8','9','4','5','6','1','2','3','0'];
 
 const OPERATORS = {
     ADD : '+',
@@ -41,7 +41,7 @@ class Buttons extends Component {
         if(this.state.number === '0' || this.state.buttonClicked === TYPES.OPERATOR || this.state.buttonClicked === TYPES.EQUAL) {
             displayNumber = number;
         } else {
-            displayNumber = this.state.number + "" + number;
+            displayNumber = this.state.number + number;
         }
         this.props.buttonClicked( displayNumber );
         this.setState({buttonClicked : TYPES.NUMBER, number : displayNumber});
@@ -56,15 +56,37 @@ class Buttons extends Component {
             case OPERATORS.SUBTRACT:
                 this.setState({storage : this.state.number, buttonClicked: TYPES.OPERATOR, operator: OPERATORS.SUBTRACT});
                 break;
+            case OPERATORS.MULTIPLY:
+                this.setState({storage : this.state.number, buttonClicked: TYPES.OPERATOR, operator: OPERATORS.MULTIPLY});
+                break;
+            case OPERATORS.DIVIDE:
+                this.setState({storage : this.state.number, buttonClicked: TYPES.OPERATOR, operator: OPERATORS.DIVIDE});
+                break;
             default:
                 return 0;
         }
     };
 
+    handleClear = () => {
+
+        let number = '0';
+        let storage = '0';
+        let operator = '';
+
+        this.setState({buttonClicked : TYPES.CLEAR, number : number, storage : storage});
+        this.props.calculate(number, storage, operator);
+    };
+
+    handleDecimal = () => {
+    let displayNumber = this.state.number + '.';
+
+        this.props.buttonClicked( displayNumber );
+        this.setState({buttonClicked : TYPES.DECIMAL, number : displayNumber});
+    };
+
     handleEqual = () => {
-       if (this.state.buttonClicked === TYPES.EQUAL) {
-           this.state.result;
-       }
+        this.props.calculate(this.state.number, this.state.storage, this.state.operator);
+        //this.setState({buttonClicked : TYPES.EQUAL, number : '0', storage : '0'});
     };
 
     render() {
